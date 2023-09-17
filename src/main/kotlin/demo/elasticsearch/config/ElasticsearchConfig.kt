@@ -7,10 +7,9 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 
 @Configuration
 @EnableElasticsearchRepositories
-class ElasticSearchConfig(
-    val elasticSearchProperties: ElasticSearchProperties
+class ElasticsearchConfig(
+    val elasticSearchProperties: ElasticsearchProperties
 ) : ElasticsearchConfiguration() {
-
     override fun clientConfiguration(): ClientConfiguration {
         return ClientConfiguration.builder()
             .connectedTo(elasticSearchProperties.getHostAndPort())
