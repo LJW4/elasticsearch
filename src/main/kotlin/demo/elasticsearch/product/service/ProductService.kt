@@ -29,7 +29,16 @@ class ProductService(
     @Transactional(readOnly = true)
     fun search(): List<ProductDto> {
         val findProducts = productDocumentRepository.findAll()
-        return findProducts.map { product -> ProductDto(product.id, product.name, product.price, product.description, product.quantity, product.createdAt) }
+        return findProducts.map { product ->
+            ProductDto(
+                product.id,
+                product.name,
+                product.price,
+                product.description,
+                product.quantity,
+                product.createdAt
+            )
+        }
     }
 
     @Transactional(readOnly = true)
