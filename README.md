@@ -1,6 +1,7 @@
 # elasticsearch
 
 데이터 저장
+```
 POST http://localhost:8080/product
 {
 	id: 1,
@@ -9,8 +10,9 @@ POST http://localhost:8080/product
     description: "가죽지갑",
     quantity: 10
 }
-
+```
 전체 조회
+```
 GET http://localhost:8080/products
 [
     {
@@ -30,8 +32,10 @@ GET http://localhost:8080/products
         "createAt": "2023-09-17T23:51:20.199"
     }
 ]
+```
 
 조건 조회
+```
 GET http://localhost:8080/product/name?name=지갑
 [
   {
@@ -43,3 +47,4 @@ GET http://localhost:8080/product/name?name=지갑
       "createAt": "2023-09-17T22:42:59.694"
   }
 ]
+```
