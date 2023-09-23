@@ -1,56 +1,60 @@
 package demo.elasticsearch.product.service
 
 import demo.elasticsearch.product.document.ProductDocument
-import demo.elasticsearch.product.dto.ProductDto
+import demo.elasticsearch.product.dto.ProductResponseDto
+import demo.elasticsearch.product.dto.ProductSaveDto
+import demo.elasticsearch.product.entity.Product
 import demo.elasticsearch.product.repository.ProductDocumentRepository
+import demo.elasticsearch.product.repository.ProductRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.lang.RuntimeException
 import java.time.LocalDateTime
 
 @Service
 class ProductService(
-    val productDocumentRepository: ProductDocumentRepository
+    private val productRepository: ProductRepository,
+    private val productDocumentRepository: ProductDocumentRepository,
+    private val categoryService: CategoryService,
+    private val productMetricsService: ProductMetricsService
 ) {
     @Transactional
-    fun save(productDto: ProductDto) {
+    fun saveProduct(productDto: ProductSaveDto) {
+        val savedCategory = categoryService.saveCategory(productDto.category)
+        val savedProduct = productRepository.save(Product(savedCategory, productDto.name, productDto.price))
+        val savedProductMetrics = productMetricsService.saveProductMetrics(savedProduct)
         productDocumentRepository.save(
-            ProductDocument(
-                id = productDto.id
-                , name = productDto.name
-                , price = productDto.price
-                , description = productDto.description
-                , quantity = productDto.quantity
-                , createdAt = LocalDateTime.now()
-            )
+            ProductDocument(savedProduct.id, savedProduct.name, savedProduct.price,
+                savedProductMetrics.views, savedProductMetrics.likes, savedCategory.name, savedProduct.createdDate, savedProduct.modifiedDate)
         )
     }
 
     @Transactional(readOnly = true)
-    fun search(): List<ProductDto> {
-        val findProducts = productDocumentRepository.findAll()
+    fun searchByCategory(categoryName: String): List<ProductResponseDto> {
+        val findProducts = productDocumentRepository.findByCategoryName(categoryName)
         return findProducts.map { product ->
-            ProductDto(
-                product.id,
-                product.name,
-                product.price,
-                product.description,
-                product.quantity,
-                product.createdAt
+            ProductResponseDto(
+                product.productId,
+                product.productName,
+                product.productPrice,
+                product.categoryName,
+                product.productViews,
+                product.productLikes
             )
         }
     }
 
     @Transactional(readOnly = true)
-    fun searchByName(name: String): ProductDto {
-        val findProduct = productDocumentRepository.findByName(name) ?: throw RuntimeException("not found product")
-        return ProductDto(
-            id = findProduct.id,
-            name = findProduct.name,
-            price = findProduct.price,
-            description = findProduct.description,
-            quantity = findProduct.quantity,
-            createAt = findProduct.createdAt
-        )
+    fun searchAll(): List<ProductResponseDto> {
+        val findProducts = productDocumentRepository.findAll()
+        return findProducts.map { product ->
+            ProductResponseDto(
+                product.productId,
+                product.productName,
+                product.productPrice,
+                product.categoryName,
+                product.productViews,
+                product.productLikes
+            )
+        }
     }
 }

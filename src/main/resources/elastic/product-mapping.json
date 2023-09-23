@@ -1,10 +1,12 @@
 {
   "properties" : {
-    "id" : {"type" : "keyword"},
-    "name" : {"type" : "keyword"},
-    "price" : {"type" : "keyword"},
-    "quantity" : {"type" : "keyword"},
-    "description" : {"type" : "text", "analyzer" : "korean"},
-    "createdAt" : {"type" : "date", "format": "uuuu-MM-dd'T'HH:mm:ss.SSS||epoch_millis"}
+    "productId": {"type" : "keyword"},
+    "productName": {"type" : "keyword"},
+    "productPrice": {"type" : "integer"},
+    "productViews": {"type": "integer"},
+    "productLikes": {"type": "integer"},
+    "categoryName": {"type": "keyword"},
+    "createdDate" : {"type" : "date", "format": "uuuu-MM-dd'T'HH:mm:ss.SSS||epoch_millis"},
+    "modifiedDate" : {"type" : "date", "format": "uuuu-MM-dd'T'HH:mm:ss.SSS||epoch_millis"}
   }
 }
