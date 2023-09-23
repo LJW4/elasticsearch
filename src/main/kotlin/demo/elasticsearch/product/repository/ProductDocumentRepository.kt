@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ProductDocumentRepository: ElasticsearchRepository<ProductDocument, Long>, CrudRepository<ProductDocument, Long> {
-    fun findByCategoryName(categoryName: String): List<ProductDocument>
+    fun findByCategoryName(name: String): List<ProductDocument>
 }

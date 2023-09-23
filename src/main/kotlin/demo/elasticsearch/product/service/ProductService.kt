@@ -29,8 +29,8 @@ class ProductService(
     }
 
     @Transactional(readOnly = true)
-    fun searchByCategory(categoryName: String): List<ProductResponseDto> {
-        val findProducts = productDocumentRepository.findByCategoryName(categoryName)
+    fun searchByCategory(name: String): List<ProductResponseDto> {
+        val findProducts = productDocumentRepository.findByCategoryName(name)
         return findProducts.map { product ->
             ProductResponseDto(
                 product.productId,
