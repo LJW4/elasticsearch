@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository
 interface CategoryRepository : JpaRepository<Category, Long> {
 
     fun findByIdIn(ids: List<Long>): List<Category>
+
+    fun findByName(name: String): Category?
 }

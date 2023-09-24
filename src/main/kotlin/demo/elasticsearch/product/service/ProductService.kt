@@ -6,6 +6,7 @@ import demo.elasticsearch.product.dto.ProductSaveDto
 import demo.elasticsearch.product.entity.Product
 import demo.elasticsearch.product.repository.ProductDocumentRepository
 import demo.elasticsearch.product.repository.ProductRepository
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -19,33 +20,18 @@ class ProductService(
 ) {
     @Transactional
     fun saveProduct(productDto: ProductSaveDto) {
-        val savedCategory = categoryService.saveCategory(productDto.category)
-        val savedProduct = productRepository.save(Product(savedCategory, productDto.name, productDto.price))
+        val findCategory = categoryService.findByName(productDto.category)
+        val savedProduct = productRepository.save(Product(findCategory, productDto.name, productDto.price))
         val savedProductMetrics = productMetricsService.saveProductMetrics(savedProduct)
         productDocumentRepository.save(
             ProductDocument(savedProduct.id, savedProduct.name, savedProduct.price,
-                savedProductMetrics.views, savedProductMetrics.likes, savedCategory.name, savedProduct.createdDate, savedProduct.modifiedDate)
+                savedProductMetrics.views, savedProductMetrics.likes, findCategory.name, savedProduct.createdDate, savedProduct.modifiedDate)
         )
     }
 
     @Transactional(readOnly = true)
-    fun searchByCategory(name: String): List<ProductResponseDto> {
-        val findProducts = productDocumentRepository.findByCategoryName(name)
-        return findProducts.map { product ->
-            ProductResponseDto(
-                product.productId,
-                product.productName,
-                product.productPrice,
-                product.categoryName,
-                product.productViews,
-                product.productLikes
-            )
-        }
-    }
-
-    @Transactional(readOnly = true)
-    fun searchAll(): List<ProductResponseDto> {
-        val findProducts = productDocumentRepository.findAll()
+    fun search(name: String, page: Int, perPage: Int): List<ProductResponseDto> {
+        val findProducts = productDocumentRepository.findByCategoryName(name, PageRequest.of(page - 1, perPage))
         return findProducts.map { product ->
             ProductResponseDto(
                 product.productId,

@@ -1,5 +1,6 @@
 package demo.elasticsearch.product.service
 
+import demo.elasticsearch.product.dto.CategorySaveDto
 import demo.elasticsearch.product.entity.Category
 import demo.elasticsearch.product.repository.CategoryRepository
 import org.springframework.data.repository.findByIdOrNull
@@ -12,8 +13,13 @@ class CategoryService(
     private val categoryRepository: CategoryRepository
 ) {
     @Transactional
-    fun saveCategory(categoryName: String): Category {
-        return categoryRepository.save(Category(categoryName))
+    fun saveCategory(categorySaveDto: CategorySaveDto): Category {
+        return categoryRepository.save(Category(categorySaveDto.name))
+    }
+
+    @Transactional(readOnly = true)
+    fun findByName(name: String): Category {
+        return categoryRepository.findByName(name) ?: throw RuntimeException("category is not found")
     }
 
     @Transactional(readOnly = true)
