@@ -21,6 +21,7 @@ class ProductDocument(
     val productPrice: Int,
     val productViews: Int,
     val productLikes: Int,
+    val categoryId: Long,
     val categoryName: String,
     @Field(type = FieldType.Date, format = [DateFormat.date_hour_minute_second_millis, DateFormat.epoch_millis])
     val createdDate: LocalDateTime,

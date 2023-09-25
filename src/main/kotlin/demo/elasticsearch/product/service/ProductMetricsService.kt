@@ -14,4 +14,10 @@ class ProductMetricsService(
     fun saveProductMetrics(product: Product): ProductMetrics {
         return productMetricsRepository.save(ProductMetrics(product))
     }
+
+    @Transactional
+    fun updateViews(productId: Long) {
+        val findProductMetrics = productMetricsRepository.findByProductId(productId) ?: throw RuntimeException("not found")
+        findProductMetrics.addViews(1)
+    }
 }

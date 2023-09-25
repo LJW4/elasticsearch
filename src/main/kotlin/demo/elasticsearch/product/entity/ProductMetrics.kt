@@ -34,7 +34,7 @@ class ProductMetrics(
         protected set
 
     fun addViews(views: Int) {
-        this.views.plus(views)
+        this.views += views
     }
 
     fun addLikes(likes: Int) {

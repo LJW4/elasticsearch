@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ProductMetricsRepository : JpaRepository<ProductMetrics, Long> {
+
+    fun findByProductId(productId: Long): ProductMetrics?
 }

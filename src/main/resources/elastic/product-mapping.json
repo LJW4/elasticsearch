@@ -5,7 +5,8 @@
     "productPrice": {"type" : "integer"},
     "productViews": {"type": "integer"},
     "productLikes": {"type": "integer"},
-    "categoryName": {"type": "keyword"},
+    "categoryId": {"type": "keyword"},
+    "categoryName": {"type": "text"},
     "createdDate" : {"type" : "date", "format": "uuuu-MM-dd'T'HH:mm:ss.SSS||epoch_millis"},
     "modifiedDate" : {"type" : "date", "format": "uuuu-MM-dd'T'HH:mm:ss.SSS||epoch_millis"}
   }
