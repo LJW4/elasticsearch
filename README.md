@@ -7,7 +7,7 @@ POST http://localhost:8080/product
 {
     "name": "지갑",
     "price": 30000,
-    "category": "액세서리",
+    "category": "액세서리"
 }
 ```
 <br/>Elasticsearch 저장
