@@ -24,7 +24,7 @@ class ProductController(
         return ResponseEntity.ok(productService.saveProduct(productSaveDto))
     }
 
-    @PostMapping("/product/document/{id}")
+    @PostMapping("/product/{id}/document")
     fun saveDocument(@PathVariable("id") id: Long): ResponseEntity<Long> {
         return ResponseEntity.ok(productService.saveProductDocument(id))
     }
