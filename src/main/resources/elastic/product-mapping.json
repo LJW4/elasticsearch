@@ -1,13 +1,13 @@
 {
   "properties" : {
-    "productId": {"type" : "keyword"},
-    "productName": {"type" : "keyword"},
-    "productPrice": {"type" : "integer"},
-    "productViews": {"type": "integer"},
-    "productLikes": {"type": "integer"},
-    "categoryId": {"type": "keyword"},
+    "id": {"type" : "keyword"},
+    "categoryId": {"type": "long"},
     "categoryName": {"type": "text"},
-    "createdDate" : {"type" : "date", "format": "uuuu-MM-dd'T'HH:mm:ss.SSS||epoch_millis"},
-    "modifiedDate" : {"type" : "date", "format": "uuuu-MM-dd'T'HH:mm:ss.SSS||epoch_millis"}
+    "name": {"type" : "keyword"},
+    "price": {"type" : "integer"},
+    "view": {"type": "integer"},
+    "likes": {"type": "integer"},
+    "createdDate" : {"type" : "date", "format": "uuuu-MM-dd'T'HH:mm:ss.SSS"},
+    "modifiedDate" : {"type" : "date", "format": "uuuu-MM-dd'T'HH:mm:ss.SSS"}
   }
 }

@@ -1,6 +1,6 @@
-package demo.elasticsearch.product.eventlistener
+package demo.elasticsearch.product.listener
 
-import demo.elasticsearch.product.service.ProductMetricsService
+import demo.elasticsearch.product.application.ProductStatsService
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Propagation
@@ -9,12 +9,12 @@ import org.springframework.transaction.event.TransactionPhase
 import org.springframework.transaction.event.TransactionalEventListener
 
 @Component
-class ViewsEventHandler(
-    private val productMetricsService: ProductMetricsService
+class ProductStatsEventHandler(
+    private val productStatsService: ProductStatsService
 ) {
-
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
-    fun addViews(event: ViewsEvent) {
-        productMetricsService.updateViews(event.productId)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    fun addViews(event: ProductViewsEvent) {
+        productStatsService.updateViews(event.id, event.productId)
     }
 }

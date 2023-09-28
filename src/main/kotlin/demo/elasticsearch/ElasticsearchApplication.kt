@@ -1,12 +1,13 @@
 package demo.elasticsearch
 
-import demo.elasticsearch.product.entity.Category
-import demo.elasticsearch.product.repository.CategoryRepository
+import demo.elasticsearch.product.domain.entity.Category
+import demo.elasticsearch.product.domain.repository.CategoryRepository
 import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.scheduling.annotation.EnableAsync
 
 @EnableAsync
